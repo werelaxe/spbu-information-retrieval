@@ -12,6 +12,11 @@ class Queryier(private val index: Index) {
         val query = ExprParser.parse(rawQuery)
         val dnfQuery = RuleSet.toDNF(query)
 
+        if (dnfQuery.exprType == "literal") {
+            if (!(dnfQuery as Literal<String>).value) {
+                return emptySet()
+            }
+        }
         return processDnf(dnfQuery)
     }
 
