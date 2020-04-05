@@ -17,7 +17,21 @@
 1) Move to the directory `src/corpus-generator`;
 2) Run fetcher: `python3 fetch.py`.
 
-### inverted index
+### Inverted index
 1) Run gradle task `fatJar`: `./gradlew fatJar`;
 2) Run the application: `java -jar ./build/libs/information-retrieval-1.0-SNAPSHOT.jar` from the project root directory;
 3) Wait for the inverted index creating.
+
+### Query syntax
+```
+<expr> ::= <term> "|" <expr> | <term>
+<term> ::= <factor> "&" <term> |  <factor>
+<factor> ::= "(" <expr> ")" |  <word>
+<word> ::= string
+```
+
+### Query example
+```
+Query: hello & !(apple | night)
+Related documents: [MusicofNewZealand, Preschool, EnergyCrisis74, Latin, Blottoband, Canadianname, Targetgirl, Phonographcylinder, PaulWilliamssaxophonist, RCARecords, SomethingBeatlessong, Musicdownload, Ritual, PennyLane, TMobile]
+```
