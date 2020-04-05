@@ -1,4 +1,5 @@
 import java.io.File
+import kotlin.math.min
 
 
 fun main() {
@@ -22,7 +23,9 @@ fun main() {
                 break
             }
             println("Query: '${query}'")
-            println("Related documents: ${querier.query(query)}")
+            val result = querier.query(query)
+            println("Related documents count: ${result.size}")
+            println("Top documents: ${result.subList(0, min(10, result.size))}")
         } catch (e: Throwable) {
             println(e)
         }
