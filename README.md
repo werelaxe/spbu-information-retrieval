@@ -25,7 +25,7 @@
 ### Query syntax
 ```
 <expr> ::= <term> "|" <expr> | <term>
-<term> ::= <factor> "&" <term> |  <factor>
+<term> ::= <factor> "&" <term> | <factor>
 <factor> ::= "(" <expr> ")" |  <word>
 <word> ::= string
 ```
