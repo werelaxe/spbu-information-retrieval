@@ -10,11 +10,15 @@ fun main() {
     val querier = Queryier(index)
 
     println("Type 'exit' for exit")
-    var query: String
+    var query: String?
     while (true) {
         try {
             print("Input query: ")
-            query = readLine()!!
+            query = readLine()
+            if (query == null) {
+                println("exit")
+                break
+            }
             if (query.isEmpty()) {
                 println("Query can not be empty")
                 continue
