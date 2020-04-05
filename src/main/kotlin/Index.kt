@@ -75,8 +75,10 @@ class Index(
     }
 
     fun getUnrelatedDocIds(word: String): Set<Int> {
-        return docsDictionary.data.values.toSet().subtract(getRelatedDocIds(word))
+        return getALlDocIds().subtract(getRelatedDocIds(word))
     }
+
+    fun getALlDocIds(): Set<Int> = docsDictionary.data.values.toSet()
 
     fun translateToDocNames(docIds: Iterable<Int>): List<String> {
         return docIds.mapNotNull { docsDictionary.reverseGet(it) }

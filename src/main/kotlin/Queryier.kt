@@ -3,6 +3,9 @@ import com.bpodgursky.jbool_expressions.parsers.ExprParser
 import com.bpodgursky.jbool_expressions.rules.RuleSet
 
 
+class QueryException(override val message: String): Exception(message)
+
+
 class Queryier(private val index: Index) {
     fun query(rawQuery: String): List<String> {
         return index.translateToDocNames(processQuery(rawQuery))
@@ -13,8 +16,10 @@ class Queryier(private val index: Index) {
         val dnfQuery = RuleSet.toDNF(query)
 
         if (dnfQuery.exprType == "literal") {
-            if (!(dnfQuery as Literal<String>).value) {
-                return emptySet()
+            return if (!(dnfQuery as Literal<String>).value) {
+                emptySet()
+            } else {
+                index.getALlDocIds()
             }
         }
         return processDnf(dnfQuery)
@@ -37,7 +42,7 @@ class Queryier(private val index: Index) {
                 processNot(literal as Not<String>)
             }
             else -> {
-                throw Exception("!")
+                throw QueryException("Can not process literal with type: '${literal.exprType}'")
             }
         }
     }
@@ -73,7 +78,7 @@ class Queryier(private val index: Index) {
                 processAnd(expr as And<String>)
             }
             else -> {
-                throw Exception("!")
+                throw QueryException("Can not process expression with type: '${expr.exprType}'")
             }
         }
     }
