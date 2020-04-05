@@ -26,7 +26,7 @@
 ```
 <expr> ::= <term> "|" <expr> | <term>
 <term> ::= <factor> "&" <term> | <factor>
-<factor> ::= "(" <expr> ")" |  <word>
+<factor> ::= "!"? ((" <expr> ")" |  <word>)
 <word> ::= string
 ```
 
