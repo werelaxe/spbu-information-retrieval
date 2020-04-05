@@ -3,7 +3,7 @@ import java.io.File
 
 fun main() {
     val storageDirectory = File("storage")
-    val corpusDirectory = File("src/main/resources/corpus")
+    val corpusDirectory = File("src/corpus-generator/corpus")
     val index = Index(storageDirectory, corpusDirectory)
     index.ensureIndex()
     val querier = Queryier(index)

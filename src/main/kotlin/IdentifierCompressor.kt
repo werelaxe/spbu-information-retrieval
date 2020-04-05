@@ -8,9 +8,7 @@ class IdentifierCompressor(
 
     init {
         storageFile?.let {
-            if (!storageFile.exists()) {
-                storageFile.mkdir()
-            } else {
+            if (storageFile.exists()) {
                 load()
             }
         }

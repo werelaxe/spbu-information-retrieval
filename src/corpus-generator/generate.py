@@ -28,6 +28,8 @@ def save_page(page):
 
 
 def main():
+    if not os.path.exists(CORPUS_DIRECTORY):
+        os.mkdir(CORPUS_DIRECTORY)
     visited_pages = set()
     pages_queue = [START_PAGE_TITLE]
 
