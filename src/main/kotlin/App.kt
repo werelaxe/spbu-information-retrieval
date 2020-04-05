@@ -7,7 +7,7 @@ fun main() {
     val corpusDirectory = File("src/corpus-generator/corpus")
     val index = Index(storageDirectory, corpusDirectory)
     index.ensureIndex()
-    val querier = Queryier(index)
+    val querier = QueryProcessor(index)
 
     println("Type 'exit' for exit")
     var query: String?

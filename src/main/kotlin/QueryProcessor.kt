@@ -6,7 +6,7 @@ import com.bpodgursky.jbool_expressions.rules.RuleSet
 class QueryException(override val message: String): Exception(message)
 
 
-class Queryier(private val index: Index) {
+class QueryProcessor(private val index: Index) {
     fun query(rawQuery: String): List<String> {
         return index.translateToDocNames(processQuery(rawQuery))
     }
