@@ -1,5 +1,8 @@
 import java.io.File
 
+class IdentifierCompressorException(override val message: String): Exception(message)
+
+
 class IdentifierCompressor(
     private val storageFile: File? = null
 ) {
@@ -28,7 +31,7 @@ class IdentifierCompressor(
             data.forEach { (originalId, compressedId) ->
                 storageFile.appendText("$originalId $compressedId\n")
             }
-        } ?: throw Exception("!")
+        } ?: throw IdentifierCompressorException("Can not dump $this, storageDir is null")
     }
 
     fun load() {
@@ -39,6 +42,6 @@ class IdentifierCompressor(
                 data[originalId] = compressedId
                 reverseData[compressedId] = originalId
             }
-        } ?: throw Exception("!")
+        } ?: throw IdentifierCompressorException("Can not load $this, storageDir is null")
     }
 }

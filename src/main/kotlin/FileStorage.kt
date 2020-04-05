@@ -3,12 +3,15 @@ import java.io.File
 private const val PrefixLength = 2
 
 
+class FileStorageException(override val message: String): Exception(message)
+
+
 class FileStorage(
     private val storageDir: File
 ) {
     private fun getPrefixAndName(key: String): Pair<String, String> {
         if (key.isEmpty()) {
-            throw Exception("!")
+            throw FileStorageException("Can not get prefix and name for empty key")
         }
         if (key.length < PrefixLength + 1) {
             return "short" to key
