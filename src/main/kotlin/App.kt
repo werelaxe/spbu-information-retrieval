@@ -5,9 +5,14 @@ import kotlin.math.min
 fun main() {
     val storageDirectory = File("storage")
     val corpusDirectory = File("src/corpus-generator/corpus")
-    val index = Index(storageDirectory, corpusDirectory)
+    val model = Bert.load(File("src/bert-model-fetcher/bert-model"))
+
+    val embeddingComputer = EmbeddingComputer(model)
+    val embeddingsManager = EmbeddingsManager(storageDirectory.resolve("embeddings"), embeddingComputer)
+
+    val index = Index(embeddingsManager, storageDirectory, corpusDirectory)
     index.ensureIndex()
-    val querier = QueryProcessor(index)
+    val queryProcessor = QueryProcessor(index, BertRanker(embeddingComputer, embeddingsManager))
 
     println("Type 'exit' for exit")
     var query: String?
