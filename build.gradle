@@ -34,6 +34,7 @@ compileTestKotlin {
 task fatJar(type: Jar) {
     manifest {
         attributes 'Main-Class': 'AppKt'
+        attributes 'Implementation-Version': '1.x.x'
     }
     from sourceSets.main.output
     dependsOn configurations.runtimeClasspath
