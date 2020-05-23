@@ -4,13 +4,17 @@ import kotlin.math.min
 
 fun main() {
     val storageDirectory = File("storage")
+    if (!storageDirectory.exists()) {
+        storageDirectory.mkdir()
+    }
     val corpusDirectory = File("src/corpus-generator/corpus")
     val model = Bert.load(File("src/bert-model-fetcher/bert-model"))
 
     val embeddingComputer = EmbeddingComputer(model)
     val embeddingsManager = EmbeddingsManager(storageDirectory.resolve("embeddings"), embeddingComputer)
+    val duplicatesFinder = DuplicatesFinder(storageDirectory.resolve("dupfinder"), embeddingsManager)
 
-    val index = Index(embeddingsManager, storageDirectory, corpusDirectory)
+    val index = Index(embeddingsManager, duplicatesFinder, storageDirectory, corpusDirectory)
     index.ensureIndex()
     val queryProcessor = QueryProcessor(index, BertRanker(embeddingComputer, embeddingsManager))
 

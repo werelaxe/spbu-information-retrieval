@@ -9,6 +9,12 @@ class FileStorageException(override val message: String): Exception(message)
 class FileStorage(
     private val storageDir: File
 ) {
+    init {
+        if (!storageDir.exists()) {
+            storageDir.mkdirs()
+        }
+    }
+
     private fun getPrefixAndName(key: String): Pair<String, String> {
         if (key.isEmpty()) {
             throw FileStorageException("Can not get prefix and name for empty key")

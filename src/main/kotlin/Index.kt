@@ -2,6 +2,8 @@ import org.slf4j.LoggerFactory
 import java.io.File
 
 class Index(
+    private val embeddingsManager: EmbeddingsManager,
+    private val duplicatesFinder: DuplicatesFinder,
     storageDir: File,
     private val corpusDirectory: File,
     private val blocksSize: Int = 400
@@ -30,6 +32,9 @@ class Index(
             .walk()
             .filter { it.isFile }
             .asSequence()
+            .map { it.apply {
+                duplicatesFinder.process(embeddingsManager.processFile(it), it.name)
+            } }
             .map { TokenizedDocument(it) }
             .map { StemmatizedDocument(it) }
             .chunked(blocksSize)
