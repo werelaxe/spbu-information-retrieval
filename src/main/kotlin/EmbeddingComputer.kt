@@ -13,11 +13,13 @@ class EmbeddingComputer(
     private val sentencesLimit: Int = 20
 ) {
     fun embed(text: String): Embedding {
-        return model.embedSequences(explodeToSentences(text).take(sentencesLimit)).toList()
+        return model.embedSequence(takeSentences(text))
     }
 
-    private fun explodeToSentences(text: String): List<String> {
-        return DocumentPreprocessor(text.reader()).map { SentenceUtils.listToString(it); }
+    private fun takeSentences(text: String): String {
+        return SentenceUtils.listToString(DocumentPreprocessor(text.reader()).map { wordsList ->
+            SentenceUtils.listToString(wordsList)
+        }.take(sentencesLimit))
     }
 
     companion object {
@@ -36,12 +38,7 @@ class EmbeddingComputer(
         }
 
         fun distance(first: Embedding, second: Embedding): Double {
-            val len = min(first.size, second.size)
-            var distance = 0.0
-            for (index in 0 until len) {
-                distance += l2distance(first[index], second[index])
-            }
-            return distance / len
+            return l2distance(first, second)
         }
     }
 }

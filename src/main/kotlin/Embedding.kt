@@ -1,6 +1,6 @@
-typealias Embedding = List<FloatArray>
+typealias Embedding = FloatArray
 
-const val EPS = 10e-2
+const val EPS = 10e-3
 
 
 infix fun Embedding.similar(other: Embedding): Boolean {

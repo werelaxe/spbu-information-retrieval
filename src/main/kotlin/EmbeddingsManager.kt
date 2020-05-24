@@ -18,21 +18,16 @@ class EmbeddingsManager(
 
     fun processFile(file: File): Embedding {
         val embedding = embeddingComputer.embed(file.readText())
-
-        fileStorage[file.name] =
-            embedding
-                .joinToString(";") { singleEmbedding ->
-                    singleEmbedding.joinToString(",")
-                }
+        fileStorage[file.name] = embedding.joinToString(",")
         return embedding
     }
 
     fun load(docName: String): Embedding {
         return fileStorage[docName]?.let { rawEmbedding ->
-            rawEmbedding.split(";").map { rawSingleEmbedding ->
-                val singleEmbedding = rawSingleEmbedding.split(",").map { it.toFloat() }
-                FloatArray(singleEmbedding.size) { singleEmbedding[it] }
+            val floatList = rawEmbedding.split(",").map {
+                it.toFloat()
             }
+            FloatArray(floatList.size) { floatList[it] }
         } ?: throw EmbeddingsManagerException("No embedding for document $docName")
     }
 }

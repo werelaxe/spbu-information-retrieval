@@ -8,6 +8,6 @@ class BertRanker(
         return docs.map { doc ->
             doc to EmbeddingComputer.distance(queryEmbedding, embeddingsManager.load(doc))
         }
-            .sortedByDescending { it.second }
+            .sortedBy { it.second }
     }
 }

@@ -31,6 +31,6 @@ class DuplicatesFinder(
     }
 
     private fun getClusterHash(embedding: Embedding): Int {
-        return embedding.sumByDouble { it.sum().toDouble() }.toInt()
+        return embedding.sum().toInt()
     }
 }

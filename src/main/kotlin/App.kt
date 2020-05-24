@@ -43,7 +43,7 @@ fun main() {
             }
             println("Top documents:")
             val maxDocNameLen = result.map { it.first.length }.max()!!
-            result.forEach { (doc, rank) ->
+            result.take(10).forEach { (doc, rank) ->
                 val duplicates = duplicatesFinder.findDuplicates(doc)
                 val dupMessage =
                     if (duplicates.isEmpty()) ""
