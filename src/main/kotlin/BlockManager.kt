@@ -66,16 +66,23 @@ class BlockManager(
         var currentValue = topValue.termId
         val currentBuffer = mutableSetOf<Int>().apply { addAll(topValue.docIds) }
 
+        with(blockAccessors[topValue.blockId])  {
+            if (hasNext()) {
+                queue.add(next())
+            }
+        }
+
         while (queue.isNotEmpty()) {
             val buff = queue.poll()
+            println("${buff.blockId} ${buff.termId} ${buff.docIds.joinToString(", ")}")
             if (buff.termId != currentValue) {
                 writeToIndex(currentValue, currentBuffer)
 
                 currentBuffer.clear()
                 currentValue = buff.termId
-            } else {
-                currentBuffer.addAll(buff.docIds)
             }
+            currentBuffer.addAll(buff.docIds)
+
             with(blockAccessors[buff.blockId])  {
                 if (hasNext()) {
                     queue.add(next())
