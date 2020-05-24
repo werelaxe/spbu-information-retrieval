@@ -6,9 +6,12 @@ import com.bpodgursky.jbool_expressions.rules.RuleSet
 class QueryException(override val message: String): Exception(message)
 
 
-class QueryProcessor(private val index: Index) {
-    fun query(rawQuery: String): List<String> {
-        return index.translateToDocNames(processQuery(rawQuery))
+class QueryProcessor(
+    private val index: Index,
+    private val ranker: BertRanker
+) {
+    fun query(rawQuery: String): List<Pair<String, Double>> {
+        return ranker.rank(rawQuery, index.translateToDocNames(processQuery(rawQuery)))
     }
 
     fun processQuery(rawQuery: String): Set<Int> {

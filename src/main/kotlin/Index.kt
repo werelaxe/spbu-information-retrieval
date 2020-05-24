@@ -1,5 +1,6 @@
 import org.slf4j.LoggerFactory
 import java.io.File
+import java.lang.Exception
 
 class Index(
     private val embeddingsManager: EmbeddingsManager,
@@ -32,9 +33,14 @@ class Index(
             .walk()
             .filter { it.isFile }
             .asSequence()
-            .map { it.apply {
-                duplicatesFinder.process(embeddingsManager.processFile(it), it.name)
-            } }
+            .mapNotNull {
+                val original = duplicatesFinder.processAndGetOriginal(embeddingsManager.processFile(it), it.name)
+                if (original == null) it
+                else run {
+                    LOG.info("Skip document: '${it.name}' is a duplicate of '${original}'")
+                    null
+                }
+            }
             .map { TokenizedDocument(it) }
             .map { StemmatizedDocument(it) }
             .chunked(blocksSize)

@@ -1,5 +1,5 @@
+import com.robrua.nlp.bert.Bert
 import java.io.File
-import kotlin.math.min
 
 
 fun main() {
@@ -36,9 +36,20 @@ fun main() {
                 break
             }
             println("Query: '${query}'")
-            val result = querier.query(query)
+            val result = queryProcessor.query(query)
             println("Related documents count: ${result.size}")
-            println("Top documents: ${result.subList(0, min(10, result.size))}")
+            if (result.isEmpty()) {
+                continue
+            }
+            println("Top documents:")
+            val maxDocNameLen = result.map { it.first.length }.max()!!
+            result.forEach { (doc, rank) ->
+                val duplicates = duplicatesFinder.findDuplicates(doc)
+                val dupMessage =
+                    if (duplicates.isEmpty()) ""
+                    else ", duplicates: ${duplicates.joinToString(", ")}"
+                println("${doc}: ${" ".repeat(maxDocNameLen - doc.length)}$rank${dupMessage}")
+            }
         } catch (e: Throwable) {
             println(e)
         }
