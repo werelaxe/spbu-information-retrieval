@@ -74,7 +74,6 @@ class BlockManager(
 
         while (queue.isNotEmpty()) {
             val buff = queue.poll()
-            println("${buff.blockId} ${buff.termId} ${buff.docIds.joinToString(", ")}")
             if (buff.termId != currentValue) {
                 writeToIndex(currentValue, currentBuffer)
 
