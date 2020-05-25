@@ -10,8 +10,7 @@
 
 ## Usage
 1) Generate or fetch the corpus;
-2) Fetch default BERT model (or create manually);
-3) Make a fat jar and run it for building the inverted index and performing the queries.
+2) Make a fat jar and run it for building the inverted index and performing the queries.
 
 ### Corpus generating
 1) Install the package `wikipedia` for python3 via `pip3 install wikipedia`; 
