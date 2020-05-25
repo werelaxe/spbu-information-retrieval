@@ -43,7 +43,7 @@ fun main() {
                 continue
             }
             val maxDocNameLen = max(result.map { it.first.length }.max()!!, 8)
-            println("\nDocument ${" ".repeat(maxDocNameLen - 8)} Similarity")
+            println("\nDocument ${" ".repeat(maxDocNameLen - 8)} Difference")
             result.take(10).forEach { (doc, rank) ->
                 val duplicates = duplicatesFinder.findDuplicates(doc)
                 val dupMessage =
