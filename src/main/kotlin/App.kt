@@ -1,5 +1,6 @@
 import com.robrua.nlp.bert.Bert
 import java.io.File
+import kotlin.math.max
 
 
 fun main() {
@@ -41,8 +42,8 @@ fun main() {
             if (result.isEmpty()) {
                 continue
             }
-            println("Top documents:")
-            val maxDocNameLen = result.map { it.first.length }.max()!!
+            val maxDocNameLen = max(result.map { it.first.length }.max()!!, 8)
+            println("\nDocument ${" ".repeat(maxDocNameLen - 8)} Similarity")
             result.take(10).forEach { (doc, rank) ->
                 val duplicates = duplicatesFinder.findDuplicates(doc)
                 val dupMessage =
