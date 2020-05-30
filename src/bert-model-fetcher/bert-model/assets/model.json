@@ -1,0 +1,9 @@
+{
+  "doLowerCase": true,
+  "inputIds": "input_ids:0",
+  "inputMask": "input_mask:0",
+  "segmentIds": "segment_ids:0",
+  "pooledOutput": "module_apply_tokens/bert/pooler/dense/Tanh:0",
+  "sequenceOutput": "module_apply_tokens/bert/encoder/layer_1/output/LayerNorm/batchnorm/add_1:0",
+  "maxSequenceLength": 128
+}

@@ -16,6 +16,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation 'org.apache:lucene-stemmers:3.4.0'
 //    implementation 'edu.stanford.nlp:stanford-parser:3.6.0'
+    implementation 'org.tensorflow:tensorflow:1.15.0'
+    implementation 'com.robrua.nlp:easy-bert:1.0.3'
     implementation 'edu.stanford.nlp:stanford-corenlp:3.9.2'
     compile group: 'com.bpodgursky', name: 'jbool_expressions', version: '1.23'
 
@@ -34,6 +36,7 @@ compileTestKotlin {
 task fatJar(type: Jar) {
     manifest {
         attributes 'Main-Class': 'AppKt'
+        attributes 'Implementation-Version': '1.x.x'
     }
     from sourceSets.main.output
     dependsOn configurations.runtimeClasspath

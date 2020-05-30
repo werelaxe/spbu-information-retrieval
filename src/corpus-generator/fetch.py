@@ -2,7 +2,7 @@ import os
 import urllib.request
 import zipfile
 
-CORPUS_URL = "http://werelaxe.site:1234/corpus.zip"
+CORPUS_URL = "http://161.35.113.35:1234/corpus.zip"
 CORPUS_ZIP_FILENAME = "corpus.zip"
 CORPUS_DIRECTORY = "corpus"
 
